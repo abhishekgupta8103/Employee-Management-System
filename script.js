@@ -109,3 +109,59 @@ alert("Employee added successfully!");
 employeeForm.reset();
     });
 }
+
+
+const apiEmployees = document.getElementById("apiEmployees");
+
+fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(data => {
+
+        data.forEach(employee => {
+
+            const employeeCard = `
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${employee.name}</h5>
+
+                            <p class="card-text">
+                                <strong>Email:</strong> ${employee.email}<br>
+                                <strong>Phone:</strong> ${employee.phone}<br>
+                                <strong>Company:</strong> ${employee.company.name}
+                            </p>
+
+                            <button 
+    class="btn btn-primary"
+    onclick="viewEmployee(${employee.id})">
+    View Employee
+</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            apiEmployees.innerHTML += employeeCard;
+        });
+
+    })
+    .catch(error => {
+        console.error("Error fetching employee data:", error);
+    });
+    function viewEmployee(id) {
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then(response => response.json())
+        .then(employee => {
+            alert(
+                `Employee Details\n\n` +
+                `Name: ${employee.name}\n` +
+                `Email: ${employee.email}\n` +
+                `Phone: ${employee.phone}\n` +
+                `Company: ${employee.company.name}`
+            );
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Unable to load employee details.");
+        });
+}
