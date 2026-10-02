@@ -165,3 +165,52 @@ fetch("https://jsonplaceholder.typicode.com/users")
             alert("Unable to load employee details.");
         });
 }
+
+const taskInput = document.getElementById("taskInput");
+const addTaskBtn = document.getElementById("addTaskBtn");
+const taskList = document.getElementById("taskList");
+
+addTaskBtn.addEventListener("click", function () {
+
+    const taskText = taskInput.value.trim();
+
+    if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+    }
+
+    const li = document.createElement("li");
+    li.className =
+        "list-group-item d-flex justify-content-between align-items-center";
+
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = taskText;
+
+    const buttonGroup = document.createElement("div");
+
+    const completeBtn = document.createElement("button");
+    completeBtn.textContent = "Complete";
+    completeBtn.className = "btn btn-success btn-sm me-2";
+
+    completeBtn.addEventListener("click", function () {
+        taskSpan.classList.toggle("text-decoration-line-through");
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.className = "btn btn-danger btn-sm";
+
+    deleteBtn.addEventListener("click", function () {
+        li.remove();
+    });
+
+    buttonGroup.appendChild(completeBtn);
+    buttonGroup.appendChild(deleteBtn);
+
+    li.appendChild(taskSpan);
+    li.appendChild(buttonGroup);
+
+    taskList.appendChild(li);
+
+    taskInput.value = "";
+});
