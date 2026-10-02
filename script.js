@@ -8,20 +8,9 @@ const heading = document.getElementById("employee-heading");
 
 console.log(heading);
 
-heading.textContent = "Our Employees";
-
-const profileBtn = document.getElementById("profileBtn");
-
-profileBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    alert("Employee Profile Opened!");
-});
-const profileBtn2 = document.getElementById("profileBtn2");
-
-profileBtn2.addEventListener("click", function (event) {
-    event.preventDefault();
-    alert("Employee 2 Profile Opened!");
-});
+if (heading) {
+    heading.textContent = "Our Employees";
+}
 
 const showEmployee = (name, role) => {
     console.log(`Employee: ${name} | Role: ${role}`);
@@ -30,20 +19,22 @@ const showEmployee = (name, role) => {
 showEmployee("Rahul Sharma", "Frontend Developer");
 showEmployee("Priya Singh", "UI/UX Designer");
 
-
 const employee = {
     name: "Rahul Sharma",
     role: "Frontend Developer",
     department: "IT"
 };
 
-const { name, role, department } = employee;
+const {
+    name,
+    role,
+    department
+} = employee;
 
 console.log(name);
 console.log(role);
 console.log(department);
 
-// ES6 Spread Operator
 
 const employee1 = {
     name: "Rahul Sharma",
@@ -76,3 +67,45 @@ const employees = [
 employees.map((employee) => {
     console.log(`${employee.name} - ${employee.role}`);
 });
+
+
+const employeeForm = document.getElementById("employeeForm");
+
+if (employeeForm) {
+
+    employeeForm.addEventListener("submit", function (event) {
+
+
+        event.preventDefault();
+
+        const employeeName =
+            document.getElementById("employeeName").value.trim();
+
+        const employeeEmail =
+            document.getElementById("employeeEmail").value.trim();
+
+        const employeeRole =
+            document.getElementById("employeeRole").value.trim();
+
+
+        if (
+    employeeName === "" ||
+    employeeEmail === "" ||
+    employeeRole === ""
+) {
+    alert("Please fill all fields.");
+    return;
+}
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailPattern.test(employeeEmail)) {
+    alert("Please enter a valid email address.");
+    return;
+}
+
+alert("Employee added successfully!");
+
+employeeForm.reset();
+    });
+}
