@@ -27,9 +27,24 @@
 
                 <!-- Welcome Card -->
                 <div class="bg-white border rounded-3 p-4 shadow-sm mb-4">
-                    <h1 class="fw-bold mb-2">Employee Dashboard</h1>
-                    <p class="text-secondary mb-1">Welcome, {{ $name }}!</p>
-                    <p class="mb-0">Role: {{ $role }}</p>
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                        <div>
+                            <h1 class="fw-bold mb-2">Employee Dashboard</h1>
+                            <p class="text-secondary mb-1">
+                                Welcome, {{ $name }}!
+                            </p>
+                            <p class="mb-0">Role: {{ $role }}</p>
+                        </div>
+
+                        <!-- Logout Button -->
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Summary Cards -->
