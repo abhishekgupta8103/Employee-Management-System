@@ -14,7 +14,10 @@
             Dashboard
         </a>
 
-        <a href="#" class="nav-link text-dark p-3">
+        <a href="{{ route('employees.index') }}">
+        <i class="bi bi-people me-2"></i>
+        Employees
+        </a>
             <i class="bi bi-people me-2"></i>
             Employees
         </a>

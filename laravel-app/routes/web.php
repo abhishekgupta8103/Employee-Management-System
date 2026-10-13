@@ -34,3 +34,8 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+
+use App\Http\Controllers\EmployeeController;
+
+Route::resource('employees', EmployeeController::class)->middleware('auth');
+

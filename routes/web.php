@@ -3,23 +3,25 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Employee;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Models\Employee;
 
+// Dashboard
 Route::get('/', function () {
-    $employees = Employee::latest()->get();
+    $employees = \App\Models\Employee::latest()->take(3)->get();
 
-    return view('dashboard', [
-        'name' => Auth::user()->name,
+    return view('employee', [
+        'name' => \Illuminate\Support\Facades\Auth::user()->name,
         'role' => 'Frontend Developer Intern',
-        'totalEmployees' => $employees->count(),
-        'activeEmployees' => 0,
+        'totalEmployees' => \App\Models\Employee::count(),
+        'activeEmployees' => \App\Models\Employee::count(),
         'onLeave' => 0,
         'employees' => $employees,
     ]);
 })->middleware('auth')->name('dashboard');
 
+// Login and Register
 Route::middleware('guest')->group(function () {
     Route::get('/login', function () {
         return view('auth.login');
@@ -36,9 +38,11 @@ Route::middleware('guest')->group(function () {
         ->name('register.store');
 });
 
+// Employee CRUD
+Route::resource('employees', EmployeeController::class)
+    ->middleware('auth');
+
+// Logout
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-
-Route::resource('employees', EmployeeController::class)
-    ->middleware('auth');
