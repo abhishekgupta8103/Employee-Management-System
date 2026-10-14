@@ -1,19 +1,14 @@
-
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DashboardController;
 
-// Dashboard: login required
-Route::get('/', function () {
-    return view('employee', [
-        'name' => Auth::user()->name,
-        'role' => 'Frontend Developer Intern',
-    ]);
-})->middleware('auth')->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
 
-// Login and Register
 Route::middleware('guest')->group(function () {
     Route::get('/login', function () {
         return view('auth.login');
@@ -30,12 +25,9 @@ Route::middleware('guest')->group(function () {
         ->name('register.store');
 });
 
-// Logout
+Route::resource('employees', EmployeeController::class)
+    ->middleware('auth');
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-
-use App\Http\Controllers\EmployeeController;
-
-Route::resource('employees', EmployeeController::class)->middleware('auth');
-
