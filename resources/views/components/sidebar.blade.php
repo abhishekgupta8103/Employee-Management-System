@@ -15,15 +15,15 @@
         </a>
 
         <!-- Employee List -->
-        <a href="{{ route('employees.index') }}"
+        <!-- <a href="{{ route('employees.index') }}"
            class="btn text-start {{ request()->routeIs('employees.index', 'employees.show', 'employees.edit', 'employees.update', 'employees.destroy') ? 'btn-primary' : 'btn-light' }}">
             <i class="bi bi-people me-2"></i>
             Employees
-        </a>
+        </a> -->
 
         <!-- Add Employee -->
         <a href="{{ route('employees.create') }}"
-           class="btn text-start {{ request()->routeIs('employees.create', 'employees.store') ? 'btn-primary' : 'btn-light' }}">
+        class="btn text-start {{ request()->routeIs('employees.create', 'employees.store') ? 'btn-primary' : 'btn-light' }}">
             <i class="bi bi-person-plus me-2"></i>
             Add Employee
         </a>
