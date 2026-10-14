@@ -28,7 +28,9 @@ class DashboardController extends Controller
                 ->count('position'),
             'totalSalary' => Employee::sum('salary'),
             'positionData' => $positionData,
-            'recentEmployees' => Employee::latest('id')->take(5)->get(),
+            'recentEmployees' => Employee::latest('id')
+                ->take(5)
+                ->get(),
         ]);
     }
 }
