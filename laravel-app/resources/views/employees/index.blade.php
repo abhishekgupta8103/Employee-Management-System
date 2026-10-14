@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Employee Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+    href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.min.css">
+    
 </head>
 <body class="bg-light">
 <div class="container py-5">
@@ -78,9 +81,40 @@
         </table>
     </div>
 
-    {{ $employees->links('pagination::bootstrap-5') }}
 
     <a href="{{ route('dashboard') }}" class="btn btn-link mt-3">Back to Dashboard</a>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const employeeTable = document.querySelector('.table');
+
+        if (employeeTable && employeeTable.querySelector('tbody tr td[colspan]') === null) {
+            new DataTable(employeeTable, {
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                order: [],
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: -1
+                    }
+                ],
+                language: {
+                    search: "Search employees:",
+                    lengthMenu: "Show _MENU_ employees",
+                    info: "Showing _START_ to _END_ of _TOTAL_ employees",
+                    emptyTable: "No employees found"
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
