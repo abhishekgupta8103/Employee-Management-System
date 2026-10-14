@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware('auth')
@@ -31,3 +32,15 @@ Route::resource('employees', EmployeeController::class)
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+    Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile.index');
+
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::put('/profile/password', [
+        ProfileController::class,
+        'updatePassword',
+    ])->name('profile.password.update');
+});
