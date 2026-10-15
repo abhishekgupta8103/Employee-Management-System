@@ -432,11 +432,15 @@
         });
     });
 
-    @if ($errors->has('current_password') || $errors->has('password'))
-        showSection(passwordForm);
-    @elseif ($errors->has('name') || $errors->has('email'))
-        showSection(detailsForm);
-    @endif
+
+@if ($errors->has('current_password') || $errors->has('password'))
+    showSection(passwordForm);
+@elseif ($errors->has('name') || $errors->has('email'))
+    showSection(detailsForm);
+@elseif (request()->query('section') === 'password')
+    showSection(passwordForm);
+@endif
+
 </script>
 
 </body>

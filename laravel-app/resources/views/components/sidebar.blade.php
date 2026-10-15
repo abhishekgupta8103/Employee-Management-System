@@ -29,16 +29,17 @@
             My Profile
         </a>
 
-        {{-- Attendance: placeholder for a future feature --}}
+        {{-- Attendance: route will be added when the module is built --}}
         <a href="#"
-           class="nav-link text-dark rounded p-3">
+           class="nav-link rounded p-3 text-dark">
             <i class="bi bi-calendar-check me-2"></i>
             Attendance
+            <span class="badge bg-light text-secondary border ms-1">Coming Soon</span>
         </a>
 
-        {{-- Settings: placeholder for a future feature --}}
-        <a href="#"
-           class="nav-link text-dark rounded p-3">
+        {{-- Settings --}}
+        <a href="{{ route('settings.index') }}"
+           class="nav-link rounded p-3 {{ request()->routeIs('settings.*') ? 'active bg-primary text-white' : 'text-dark' }}">
             <i class="bi bi-gear me-2"></i>
             Settings
         </a>
