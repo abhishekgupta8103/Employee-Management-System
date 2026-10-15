@@ -52,7 +52,7 @@
                 <div class="mb-4">
                     <label class="form-label">Salary</label>
                     <input type="number" name="salary" class="form-control"
-                           value="{{ old('salary') }}" min="0" step="0.01">
+                           value="{{ old('salary') }}" step="0.01">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save Employee</button>

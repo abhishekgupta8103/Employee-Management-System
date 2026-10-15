@@ -8,6 +8,9 @@ use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
+    /**
+     * Display employees with search, filter and pagination.
+     */
     public function index(Request $request)
     {
         $query = Employee::query();
@@ -17,7 +20,7 @@ class EmployeeController extends Controller
 
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
-                  ->orWhere('email', 'like', '%' . $search . '%');
+                    ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
 
@@ -42,19 +45,39 @@ class EmployeeController extends Controller
         ]);
     }
 
+    /**
+     * Show the employee creation form.
+     */
     public function create()
     {
         return view('employees.create');
     }
 
+    /**
+     * Store a new employee after validation.
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:employees,email',
+            'email' => 'required|email|max:255|unique:employees,email',
             'phone' => 'nullable|string|max:20',
             'position' => 'nullable|string|max:255',
             'salary' => 'nullable|numeric|min:0',
+        ], [
+            'name.required' => 'Employee name is required.',
+            'name.string' => 'Name must be valid text.',
+            'name.max' => 'Name cannot exceed 255 characters.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.max' => 'Email cannot exceed 255 characters.',
+            'email.unique' => 'This email is already registered.',
+            'phone.string' => 'Phone number must be valid text.',
+            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'position.string' => 'Position must be valid text.',
+            'position.max' => 'Position cannot exceed 255 characters.',
+            'salary.numeric' => 'Salary must be a valid number.',
+            'salary.min' => 'Salary cannot be negative.',
         ]);
 
         Employee::create($data);
@@ -63,16 +86,25 @@ class EmployeeController extends Controller
             ->with('success', 'Employee added successfully!');
     }
 
+    /**
+     * Display a single employee.
+     */
     public function show(Employee $employee)
     {
         return view('employees.show', compact('employee'));
     }
 
+    /**
+     * Show the employee edit form.
+     */
     public function edit(Employee $employee)
     {
         return view('employees.edit', compact('employee'));
     }
 
+    /**
+     * Update an existing employee after validation.
+     */
     public function update(Request $request, Employee $employee)
     {
         $data = $request->validate([
@@ -80,11 +112,27 @@ class EmployeeController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('employees', 'email')->ignore($employee->id),
+                'max:255',
+                Rule::unique('employees', 'email')
+                    ->ignore($employee->id),
             ],
             'phone' => 'nullable|string|max:20',
             'position' => 'nullable|string|max:255',
             'salary' => 'nullable|numeric|min:0',
+        ], [
+            'name.required' => 'Employee name is required.',
+            'name.string' => 'Name must be valid text.',
+            'name.max' => 'Name cannot exceed 255 characters.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.max' => 'Email cannot exceed 255 characters.',
+            'email.unique' => 'This email is already registered.',
+            'phone.string' => 'Phone number must be valid text.',
+            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'position.string' => 'Position must be valid text.',
+            'position.max' => 'Position cannot exceed 255 characters.',
+            'salary.numeric' => 'Salary must be a valid number.',
+            'salary.min' => 'Salary cannot be negative.',
         ]);
 
         $employee->update($data);
@@ -93,6 +141,9 @@ class EmployeeController extends Controller
             ->with('success', 'Employee updated successfully!');
     }
 
+    /**
+     * Delete an employee.
+     */
     public function destroy(Employee $employee)
     {
         $employee->delete();
@@ -101,4 +152,3 @@ class EmployeeController extends Controller
             ->with('success', 'Employee deleted successfully!');
     }
 }
-

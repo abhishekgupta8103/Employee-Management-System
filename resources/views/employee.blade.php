@@ -125,7 +125,10 @@
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="{{ route('employees.index') }}" class="btn btn-primary rounded-3 px-3 py-2">
+                        <a href="{{ route('employees.create') }}" class="btn btn-success rounded-3 px-3 py-2">
+    <i class="bi bi-person-plus-fill me-1"></i> Add Employee
+</a>
+<a href="{{ route('employees.index') }}" class="btn btn-primary rounded-3 px-3 py-2">
                             <i class="bi bi-people me-1"></i> Manage Employees
                         </a>
 
